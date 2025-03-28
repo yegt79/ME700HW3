@@ -50,7 +50,7 @@ It takes ele_type (e.g., "D2_nn4_quad"), node_coords (physical nodes, [0, 0] to 
   and loops over (ξ, η) pairs.
   Evaluates shape function derivatives (dN_dxi) at (ξ, η).
   Computes the gradient as dN_dxi.T @ node_values, yielding ∂f/∂ξ and ∂f/∂η.
-Step back into transform_gradient_to_physical:
+  Step out
 Checks if the field is scalar or vector
 Loops over each (ξ, η) pair (here, just one: (0, 0)).
 Computes the Jacobian
@@ -65,7 +65,33 @@ integral_of_deriv computes the analytical integral of the derivatives over the e
 Let’s step into what has been called: compute_integral_of_derivative
 Computes the gradient in natural coordinates using interpolate_gradient_natural_coords_single_element.
 Transforms it to physical coordinates with transform_gradient_to_physical.
+  Let's step into what has been called: transform_gradient_to_physical
+  It identifies a scalar field, initializes gradient_physical and iterates over points. For each (ξ, η),
+  Computes the Jacobian (J) via compute_jacobian.  
+    Let's step into what has been called: transform_gradient_to_physical
+      It maps ele_type to shape function derivatives
+      evaluates dN_dxi at (ξ, η), and computes the Jacobian as node_coords.T @ dN_dxi
+      step out
+  Inverts J and applies J_inv.T @ gradient_natural, transforming ∂f/∂ξ, ∂f/∂η to ∂f/∂x, ∂f/∂y.
+  step out
 Calculates the Jacobian determinant (det_J) via compute_jacobian.
 Sums the weighted gradient contribution (weight * gradient_physical * det_J
+
+Done.
+
+tutorial_discretization.ipynb
+  ├── visualize_gauss_pts
+tutorial_discretization.ipynb
+  ├── plot_interpolate_field_natural_coords_single_element
+tutorial_discretization.ipynb
+  ├── visualize_isoparametric_mapping_single_element
+tutorial_discretization.ipynb
+  ├── transform_gradient_to_physical
+  │   ├── interpolate_gradient_natural_coords_single_element
+tutorial_discretization.ipynb
+  ├── compute_integral_of_derivative
+  │   ├── interpolate_gradient_natural_coords_single_element
+  │   ├── transform_gradient_to_physical
+  │   │   ├── compute_jacobian
 
 
