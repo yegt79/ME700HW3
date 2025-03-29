@@ -62,6 +62,50 @@ step out
 step out
 Finally, it prints the average times for stiffness, traction, and residual assembly in seconds, providing performance metrics for these operations.
 
+The script prepares a matrix system and times its solve. It calls solver_demo.prep_for_matrix_solve 
+storing the stiffness matrix K and residual R.
+  Stepping into: prep_for_matrix_solve
+  The function prep_for_matrix_solve assembles the system for solving. It builds K using assemble.global_stiffness, F with assemble.global_traction, and computes R as F minus assemble.global_residual. It reshapes displacement and applies fixed boundary conditions by modifying K and R rows for each fixed DOF, returning K and R.
+
+step out
+It sets method to "dense" and num_runs to 5, then calls solver_demo.time_one_matrix_solve with K, R, method, and num_runs, saving the average time in avg_time_dense_solve. It prints this time in seconds.
+
+  Stepping into: time_one_matrix_solve
+  The function time_one_matrix_solve times a matrix solve. For method="dense", it sets func to np.linalg.solve with K and R, then calls time_function_call with these and num_runs, returning the average solve time in seconds.
+
+Step out
+
+The script examines the stiffness matrix’s sparsity. It sets fname to "solver_global_stiffness_1.png" and calls solver_demo.analyze_and_visualize_matrix with K and fname to compute diagnostics and visualize the matrix pattern.
+  Stepping into:analyze_and_visualize_matrix
+  The function analyze_and_visualize_matrix analyzes and plots the matrix. It converts K to sparse CSR format if needed, computes the condition number with compute_condition_number, sparsity with compute_sparsity, and bandwidth with compute_bandwidth. It creates a plot, uses imshow by default to show the sparsity pattern
+
+Step out
+
+The script tests sparse matrix assembly timing.
+It sets num_runs to 5 and calls solver_demo.time_assemble_global_stiffness_sparse storing the average time in avg_time_global_stiffness_sparse.
+  Stepping into: time_assemble_global_stiffness_sparse
+  The function time_assemble_global_stiffness_sparse measures sparse stiffness matrix assembly time. It calls time_function_call with assemble.global_stiffness_sparse, passing ele_type, coords, connect, material_props, displacement, and num_runs, returning the average time in seconds.
+
+Step out
+
+The script tests a sparse matrix solver’s timing. It sets method to "sparse" and num_runs to 10, then calls solver_demo.time_one_matrix_solve with K, R, method, and num_runs, storing the average time in avg_time_sparse_solve. It prints this time.
+  
+The script tests a sparse iterative solver’s timing. It sets method to "sparse_iterative" and num_runs to 10, then calls solver_demo.time_one_matrix_solve with K, R, method, and num_runs, storing the average time in avg_time_sparse_iterative_solve. It prints this time.
+
+The script runs a hyperelastic solver and visualizes results.
+calls hyperelastic_solver storing results in displacements_all and nr_info_all.
+  Stepping into:hyperelastic_solver
+  The function hyperelastic_solver solves a hyperelastic problem using Newton-Raphson with incremental loading. It initializes a displacement vector and iterates over nr_num_steps, applying a load factor. For each step, it assembles K, F, and R using assemble functions, adjusts for fixed nodes, solves for displacement corrections with np.linalg.solve, and updates until convergence or nr_maxit. It returns all displacements and iteration info, printing details if nr_print is True.
+
+Step out
+  
+  Stepping into:make_deformation_gif
+  The function viz.make_deformation_gif creates a GIF of mesh deformation. It sets up a plot with fixed limits based on max displacement, plots the undeformed mesh in gray, and initializes lines and a scatter for the deformed state. It defines an update function to adjust lines and scatter with each frame’s magnified displacement from displacements_all, updating the title. It uses FuncAnimation to generate the GIF, saving it to gif_path with Pillow.
+
+Step out
+  
+
+
 
 
 
