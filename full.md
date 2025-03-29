@@ -52,6 +52,20 @@ This function transforms a gradient from natural ($\xi$, $\eta$) to physical ($x
 
 This function computes the gradient in natural coordinates using `interpolate_gradient_natural_coords_single_element` and transforms it to physical coordinates with `transform_gradient_to_physical`. It calculates the Jacobian determinant ($det_J$) via `compute_jacobian` and sums the weighted gradient contribution: $weight \cdot gradient_physical \cdot det_J$.
 
+## Call Hierarchy
+
+| **File/Function**                          | **Sub-Functions**                              |
+|--------------------------------------------|------------------------------------------------|
+| `tutorial_discretization.ipynb`            | `visualize_gauss_pts`                          |
+| `tutorial_discretization.ipynb`            | `plot_interpolate_field_natural_coords_single_element` |
+| `tutorial_discretization.ipynb`            | `visualize_isoparametric_mapping_single_element` |
+| `tutorial_discretization.ipynb`            | `transform_gradient_to_physical`               |
+|                                            |   ├── `interpolate_gradient_natural_coords_single_element` |
+| `tutorial_discretization.ipynb`            | `compute_integral_of_derivative`               |
+|                                            |   ├── `interpolate_gradient_natural_coords_single_element` |
+|                                            |   ├── `transform_gradient_to_physical`         |
+|                                            |   │  ├── `compute_jacobian`                   |
+
 # Finite Element Analysis Tutorial: `tutorial_sparse_solver.ipynb`
 
 The script starts by importing several modules from a custom `finiteelementanalysis` package and sets up a hyperelastic problem with sparse solver testing.
@@ -153,3 +167,24 @@ The function `hyperelastic_solver` solves a hyperelastic finite element problem 
 ### 🔍 Stepping into `make_deformation_gif`
 
 The function `viz.make_deformation_gif` creates an animated GIF showing deformation progression. It sets up a plot with fixed limits based on the maximum displacement from `displacements_all`, plots the undeformed mesh in gray, and initializes lines and a scatter for the deformed state with edges like $(0,4)$ to $(7,0)$ for `"D2_nn8_quad"`. It defines an `update` function to adjust lines and scatter with each frame’s magnified displacement, updating the title with frame numbers. It uses `animation.FuncAnimation` to generate the GIF, saving it to `gif_path` with the Pillow writer at a specified `interval`.
+
+## Call Hierarchy
+
+| **File/Function**                          | **Sub-Functions**                              |
+|--------------------------------------------|------------------------------------------------|
+| `tutorial_sparse_solver.ipynb`             | `define_sample_problem_geom`                   |
+|                                            |   ├── `generate_rect_mesh_2d`                 |
+| `tutorial_sparse_solver.ipynb`             | `define_sample_problem_info`                   |
+|                                            |   ├── `identify_rect_boundaries`              |
+|                                            |   ├── `assign_fixed_nodes_rect`               |
+|                                            |   ├── `assign_uniform_load_rect`              |
+| `tutorial_sparse_solver.ipynb`             | `plot_mesh_2D`                                 |
+| `tutorial_sparse_solver.ipynb`             | `time_assemble_global_stiffness`               |
+| `tutorial_sparse_solver.ipynb`             | `time_assemble_global_traction`                |
+| `tutorial_sparse_solver.ipynb`             | `time_assemble_global_residual`                |
+| `tutorial_sparse_solver.ipynb`             | `prep_for_matrix_solve`                        |
+| `tutorial_sparse_solver.ipynb`             | `time_one_matrix_solve`                        |
+| `tutorial_sparse_solver.ipynb`             | `analyze_and_visualize_matrix`                 |
+| `tutorial_sparse_solver.ipynb`             | `time_assemble_global_stiffness_sparse`        |
+| `tutorial_sparse_solver.ipynb`             | `hyperelastic_solver`                          |
+| `tutorial_sparse_solver.ipynb`             | `make_deformation_gif`                         |
