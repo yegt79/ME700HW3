@@ -106,4 +106,4 @@ To evaluate the error between FEA and the analytical solution, we compute:
 
 ## 🧪 Conclusion
 
-This comparison verifies that the FEA solution matches the analytical result closely (within the expected range for a coarse mesh). As the mesh is refined, the FEA solution should converge to the analytical value.
+This comparison verifies that the FEA solution matches the analytical result closely (within the expected range for a coarse mesh). As the mesh is refined, the FEA solution should converge to the
