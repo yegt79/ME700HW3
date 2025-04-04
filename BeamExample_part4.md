@@ -63,7 +63,7 @@ $$ w(L) \approx -0.219 \text{ units} $$
 
 ---
 
-## Comparison with FEA
+## Comparison with Code
 
 The FEA solver computes the tip displacement using the hyperelastic formulation. After solving:
 
