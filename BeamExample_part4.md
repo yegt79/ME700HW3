@@ -20,7 +20,7 @@ A 2D cantilever beam is subjected to a uniform downward load along its top edge.
 
 ## 🧠 Analytical Formula (Euler–Bernoulli Beam Theory)
 
-The analytical tip deflection for a cantilever under uniform load is:
+The analytical tip deflection for a cantilever under uniform load is given by:
 
 \[
 w(L) = \frac{q L^4}{8 E_{\text{eff}} I}
@@ -35,23 +35,41 @@ Where:
 
 ## 🧮 Numerical (By-Hand) Evaluation
 
-1. **Effective Young’s Modulus:**
+### 1. **Effective Young’s Modulus:**
+
+We first calculate the effective Young's modulus:
 
 \[
-E_{\text{eff}} = \frac{E}{1 - \nu^2} = \frac{100000}{1 - 0.3^2} = \frac{100000}{0.91} \approx 109890.11
+E_{\text{eff}} = \frac{E}{1 - \nu^2}
 \]
 
-2. **Moment of Inertia:**
+Substituting the known values:
+
+\[
+E_{\text{eff}} = \frac{100000}{1 - 0.3^2} = \frac{100000}{0.91} \approx 109890.11
+\]
+
+### 2. **Moment of Inertia:**
+
+Next, we calculate the second moment of area for the beam:
 
 \[
 I = \frac{H^3}{12} = \frac{1^3}{12} = \frac{1}{12} \approx 0.08333
 \]
 
-3. **Tip Displacement:**
+### 3. **Tip Displacement:**
+
+Finally, we compute the tip displacement using the formula:
 
 \[
-w(L) = \frac{-0.01 \cdot 20^4}{8 \cdot 109890.11 \cdot 0.08333} = \frac{-1600}{7306.0} \approx -0.219
+w(L) = \frac{-0.01 \cdot 20^4}{8 \cdot 109890.11 \cdot 0.08333}
 \]
+
+\[
+w(L) = \frac{-1600}{7306.0} \approx -0.219
+\]
+
+---
 
 ### ✅ Final Result (By-Hand):
 
@@ -70,9 +88,16 @@ The FEA solver computes the tip displacement using the hyperelastic formulation.
 
 ### 📉 Error Evaluation:
 
+To evaluate the error between FEA and the analytical solution, we compute:
+
+#### Absolute Error:
+
 \[
 \text{Absolute Error} = | \text{FEA} - \text{Analytical} |
 \]
+
+#### Relative Error:
+
 \[
 \text{Relative Error} = \frac{\text{Absolute Error}}{| \text{Analytical} |}
 \]
