@@ -1,4 +1,4 @@
-# Assignment 3 - Part 4.1 #
+# Assignment 3 - Part 4 A #
 
 # Validation: Numerical vs. Analytical QoI: tip deflection #
 
@@ -69,3 +69,5 @@ The FEA solver computes the tip displacement using the hyperelastic formulation.
 
 - **Analytical solution from code:** Analytical Euler-Bernoulli deflection: -0.021840
 - **Numerical solution:** -0.219
+
+- # Assignment 3 - Part 4 B #
