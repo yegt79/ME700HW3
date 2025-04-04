@@ -26,8 +26,8 @@ $$ w(L) = \frac{q L^4}{8 E_{\text{eff}} I} $$
 
 Where:
 
-- $ I = \frac{H^3}{12} $ is the second moment of area.
-- $ E_{\text{eff}} = \frac{E}{1 - \nu^2} $ is the effective Young’s modulus (for plane strain).
+- $I = \frac{H^3}{12}$ is the second moment of area.
+- $E_{\text{eff}} = \frac{E}{1 - \nu^2}$ is the effective Young’s modulus (for plane strain).
 
 ---
 
