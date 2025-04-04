@@ -1,6 +1,6 @@
-**Assignment 3 - Part 4.1**
+# Assignment 3 - Part 4.1 #
 
-# Validation: Tip Displacement of a Cantilever Beam
+# Validation: Numerical vs. Analytical QoI: tip deflection #
 
 We validate the FEA result by comparing it to a numerical (by-hand) calculation using the analytical solution from Euler–Bernoulli beam theory.
 
