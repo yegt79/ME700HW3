@@ -20,44 +20,30 @@ We analyze the tip deflection of a 2D cantilever beam subjected to a uniform dow
 ### 🧮 Beam Theory
 For a cantilever beam with a rectangular cross-section:
 
-- **Moment of inertia (I):**
-  \[
-  I = \frac{H^3}{12}
-  \]
+- **Moment of inertia (I):**  
+  I = H³ / 12
 
-- **Tip deflection (w) under uniform load:**
-  \[
-  w(L) = \frac{q L^4}{8 E I}
-  \]
+- **Tip deflection (w) under uniform load:**  
+  w(L) = (q × L⁴) / (8 × E × I)
 
 ---
 
 ## 📊 Step-by-Step Calculation (Analytical)
 
 ### 1. Calculate Moment of Inertia
-\[
-I = \frac{1.0^3}{12} = \frac{1.0}{12} \approx 0.0833
-\]
+I = (1.0³) / 12 = 1.0 / 12 ≈ 0.0833
 
 ### 2. Plug into the Deflection Formula
-\[
-w(L) = \frac{-0.01 \cdot 20^4}{8 \cdot 100000 \cdot 0.0833}
-\]
+w(L) = (-0.01 × 20⁴) / (8 × 100000 × 0.0833)
 
 #### Numerator:
-\[
--0.01 \cdot 160000 = -1600
-\]
+-0.01 × 160000 = -1600
 
 #### Denominator:
-\[
-8 \cdot 100000 \cdot 0.0833 \approx 66640
-\]
+8 × 100000 × 0.0833 ≈ 66640
 
 ### 3. Final Analytical Result
-\[
-w(L) \approx \frac{-1600}{66640} \approx \boxed{-0.021840}
-\]
+w(L) ≈ -1600 / 66640 ≈ **-0.021840**
 
 ---
 
@@ -65,7 +51,7 @@ w(L) \approx \frac{-1600}{66640} \approx \boxed{-0.021840}
 
 - **Tip node index:** 9  
 - **Coordinates:** [20.0, 0.5]  
-- **Computed tip deflection (y):** \(\boxed{-0.002270}\)
+- **Computed tip deflection (y):** **-0.002270**
 
 ---
 
