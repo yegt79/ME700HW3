@@ -1,3 +1,5 @@
+**Assignment 3 - Part 4.1**
+
 # Validation: Tip Displacement of a Cantilever Beam
 
 We validate the FEA result by comparing it to a numerical (by-hand) calculation using the analytical solution from Euler–Bernoulli beam theory.
@@ -18,7 +20,7 @@ A 2D cantilever beam is subjected to a uniform downward load along its top edge.
 
 ---
 
-## Analytical Formula (Euler–Bernoulli Beam Theory)
+## Numerical (By-Hand) Evaluation
 
 The analytical tip deflection for a cantilever under uniform load is given by:
 
@@ -28,10 +30,6 @@ Where:
 
 - $I = \frac{H^3}{12}$ is the second moment of area.
 - $E_{\text{eff}} = \frac{E}{1 - \nu^2}$ is the effective Young’s modulus (for plane strain).
-
----
-
-## Numerical (By-Hand) Evaluation
 
 ### 1. Effective Young’s Modulus
 
@@ -71,21 +69,3 @@ The FEA solver computes the tip displacement using the hyperelastic formulation.
 
 - **FEA tip displacement:** `~ -0.XXX` *(insert from code output)*
 - **Analytical solution:** `-0.219`
-
-### Error Evaluation
-
-To evaluate the error between FEA and the analytical solution, we compute:
-
-#### Absolute Error
-
-$$ \text{Absolute Error} = | \text{FEA} - \text{Analytical} | $$
-
-#### Relative Error
-
-$$ \text{Relative Error} = \frac{\text{Absolute Error}}{| \text{Analytical} |} $$
-
----
-
-## Conclusion
-
-This comparison verifies that the FEA solution matches the analytical result closely (within the expected range for a coarse mesh). As the mesh is refined, the FEA solution should converge to the analytical value.
