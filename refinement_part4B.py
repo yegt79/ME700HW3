@@ -5,19 +5,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-# Debug: Verify the module path
-print(f"Using discretization module: {di.__file__}")
-
-def refinement_example(ele_type, num_gauss_pts, nx, ny, stretch=5.0, material_props=np.array([1.0, 2.0])):
+def refinement_example(ele_type, num_gauss_pts, nx, ny, stretch=5.0, material_props=np.array([1.0, 2.0]), nr_num_steps=5):
     # Generate mesh
     x_lower, y_lower = 0, 0
     x_upper, y_upper = 10, 10
     coords, connect = pre.generate_rect_mesh_2d(ele_type, x_lower, y_lower, x_upper, y_upper, nx, ny)
-    
-    # Debug: Print shapes
-    print(f"ele_type: {ele_type}")
-    print(f"coords shape (before transpose): {coords.shape}")
-    print(f"connect shape (before transpose): {connect.shape}")
     
     # Identify boundaries
     boundary_nodes, boundary_edges = pre.identify_rect_boundaries(coords, connect, ele_type, 0, 10.0, 0, 10.0)
@@ -29,10 +21,6 @@ def refinement_example(ele_type, num_gauss_pts, nx, ny, stretch=5.0, material_pr
     fixed_bottom_y = pre.assign_fixed_nodes_rect(boundary_nodes, "bottom", None, 0.0)
     fixed_nodes = np.hstack((fixed_left, fixed_right, fixed_top_y, fixed_bottom_y))
     
-    # Debug: Print fixed_nodes
-    print(f"fixed_nodes shape: {fixed_nodes.shape}")
-    print(f"fixed_nodes:\n{fixed_nodes}")
-    
     # No distributed load
     _, ndof, _ = di.element_info(ele_type)
     dload_info = np.empty((ndof + 2, 0))
@@ -42,12 +30,12 @@ def refinement_example(ele_type, num_gauss_pts, nx, ny, stretch=5.0, material_pr
         displacements_all, _ = sl.hyperelastic_solver(
             material_props=material_props,
             ele_type=ele_type,
-            coords=coords.T,  # Transpose to (ncoord, n_nodes)
-            connect=connect.T,  # Transpose to (n_elems, n_nodes_per_elem)
+            coords=coords.T,
+            connect=connect.T,
             fixed_nodes=fixed_nodes,
             dload_info=dload_info,
-            nr_print=True,
-            nr_num_steps=5,
+            nr_print=False,
+            nr_num_steps=nr_num_steps,
             nr_tol=1e-9,
             nr_maxit=30,
             matrix_solve_sparse=True
@@ -62,10 +50,6 @@ def refinement_example(ele_type, num_gauss_pts, nx, ny, stretch=5.0, material_pr
     # Reshape displacement to (n_nodes, ndof)
     displacement_reshaped = displacement.reshape(-1, ndof)
     
-    # Debug: Print displacement
-    print(f"displacement_reshaped shape: {displacement_reshaped.shape}")
-    print(f"displacement_reshaped:\n{displacement_reshaped}")
-    
     # Compute QoI: maximum x-displacement
     max_ux = np.max(displacement_reshaped[:, 0])
     
@@ -74,15 +58,11 @@ def refinement_example(ele_type, num_gauss_pts, nx, ny, stretch=5.0, material_pr
     
     return max_ux, total_dofs
 
-# Test element type support
-_, ndof, nnodes = di.element_info("D2_nn6_tri")
-print(f"D2_nn6_tri: ndof={ndof}, nnodes={nnodes}")
-
 # Part A: Large deformation example with h- and p-refinement
-print("\n--- Part A: Large Deformation Example with h-Refinement ---\n")
+print("\n--- Part A: Large Deformation Example with h- and p-Refinement ---\n")
 
-# h-refinement with 6-node triangular elements
-ele_type = "D2_nn6_tri"
+# h-refinement with 3-node triangular elements
+ele_type = "D2_nn3_tri"
 num_gauss_pts = 1
 h_refine_dofs = []
 h_refine_qoi = []
@@ -95,9 +75,24 @@ for val in [2, 4, 8, 16, 32, 64, 128]:
     h_refine_qoi.append(max_ux)
     print(f"Part A h-refinement: nx={nx}, ny={ny}, dofs={dofs}, max_ux={max_ux}")
 
+# p-refinement with 6-node triangular elements
+ele_type = "D2_nn6_tri"
+num_gauss_pts = 1
+p_refine_dofs = []
+p_refine_qoi = []
+
+for val in [2, 4, 8, 16, 32, 64]:
+    nx = val
+    ny = val
+    max_ux, dofs = refinement_example(ele_type, num_gauss_pts, nx, ny, stretch=5.0)
+    p_refine_dofs.append(dofs)
+    p_refine_qoi.append(max_ux)
+    print(f"Part A p-refinement: nx={nx}, ny={ny}, dofs={dofs}, max_ux={max_ux}")
+
 # Plot QoI vs. dofs for Part A
 plt.figure()
-plt.semilogx(h_refine_dofs, h_refine_qoi, 'o-', label='h-refinement (D2_nn6_tri)')
+plt.semilogx(h_refine_dofs, h_refine_qoi, 'o-', label='h-refinement (D2_nn3_tri)')
+plt.semilogx(p_refine_dofs, p_refine_qoi, 's-', label='p-refinement (D2_nn6_tri)')
 plt.xlabel('Degrees of Freedom (dofs)')
 plt.ylabel('Maximum x-displacement (max_ux)')
 plt.title('Part A: Convergence Study - QoI vs. dofs')
