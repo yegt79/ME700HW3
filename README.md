@@ -1,16 +1,15 @@
 # Assignment 3
 
-## Part 3: Implementing a better element for a previous example
-**Implementation:** Replacing D2_nn4_quad elements with D2_nn8_quad elements (more refined)  
-**Result:** Analytical and numerical derivatives match!
+## Part 1: Code Comprehension
+![Assignment 3 Header Image](tutorials/flowchart.png)
 
-## Part 4-a: Validation, Numerical vs. Analytical
+## Part 2A: Validation, Numerical vs. Analytical
 **Result:**  
 - Analytical solution for tip deflection: -0.021840  
 - FEA Solution for tip deflection: -0.021817  
 - Absolute error: 2.321666e-05  
 
-## Part 4-b: Implementing a Large Deformation with h-refinement & p-refinement
+## Part 2B: Implementing a Large Deformation with h-refinement & p-refinement
 **Result:**  
 === Tip Deflection Comparison ===  
 - Analytical Euler-Bernoulli deflection: -4.422600  
@@ -24,7 +23,7 @@
   - Computed tip deflection (y): -4.370599  
   - Absolute error: 5.200065e-02  
 
-## Part 4-c: Implementing a Large Deformation where the FEA code fails
+## Part 2C: Implementing a Large Deformation where the FEA code fails
 **Reason for failure:** Large loading and low stiffness  
 
 # finite-element-analysis
