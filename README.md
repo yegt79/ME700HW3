@@ -1,7 +1,7 @@
 # Assignment 3
 
 ## Part 1: Code Comprehension
-![Assignment 3 Header Image](tutorials/flowchart.png)
+![Assignment 3 Header Image](flowchart.png)
 
 ## Part 2A: Validation, Numerical vs. Analytical
 **Result:**  
